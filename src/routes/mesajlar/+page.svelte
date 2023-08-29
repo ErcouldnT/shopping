@@ -4,6 +4,8 @@
 	// Components
 	import { Avatar, CodeBlock, ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
 
+	export let data;
+
 	// Types
 	interface Person {
 		id: number;
@@ -84,7 +86,7 @@
 		return new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
 	}
 
-	function addMessage(): void {
+	async function addMessage(): void {
 		const newMessage = {
 			id: messageFeed.length,
 			host: true,
@@ -94,6 +96,13 @@
 			message: currentMessage,
 			color: 'variant-soft-primary'
 		};
+
+		const { error } = await data.supabase.from('messages').insert({
+			from: data.session?.user.id,
+			to: '3',
+			text: currentMessage
+		});
+
 		// Update the message feed
 		messageFeed = [...messageFeed, newMessage];
 		// Clear prompt
@@ -106,7 +115,7 @@
 	}
 
 	function onPromptKeydown(event: KeyboardEvent): void {
-		if (['Enter'].includes(event.code)) {
+		if (['Enter'].includes(event.code) && currentMessage.trim().length > 1) {
 			event.preventDefault();
 			addMessage();
 		}
