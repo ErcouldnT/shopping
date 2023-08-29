@@ -1,0 +1,1 @@
+<p>Yönetim paneli</p>
