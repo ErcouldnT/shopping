@@ -107,7 +107,7 @@
 					</button>
 				{:else}
 					<button on:click={login} class="btn btn-sm variant-filled-tertiary">Giriş</button>
-					<LightSwitch />
+					<!-- <LightSwitch /> -->
 				{/if}
 			</svelte:fragment>
 		</AppBar>

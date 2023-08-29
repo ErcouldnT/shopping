@@ -38,7 +38,7 @@
 	// });
 </script>
 
-<main class="grid grid-cols-3 gap-5">
+<main class="grid md:grid-cols-3 grid-cols-1 gap-5">
 	{#each allAds[0] || [] as ad}
 		<a
 			class="card card-hover overflow-hidden"
