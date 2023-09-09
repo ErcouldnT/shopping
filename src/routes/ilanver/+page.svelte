@@ -23,8 +23,6 @@
 	let seller: { created_at: string; id: number; seller_id: string; shop_name: string } | null;
 	let shop_name: string;
 
-	// $: console.log(colorValue);
-
 	const popupCombobox: PopupSettings = {
 		event: 'focus-click',
 		target: 'popupCombobox',
@@ -61,8 +59,7 @@
 			.from('sellers')
 			.select()
 			.eq('seller_id', session?.user.id || '');
-		seller = (data && data[0]) || null;
-		console.log(seller);
+		seller = data && data[0];
 	};
 
 	getSellerInfo();
