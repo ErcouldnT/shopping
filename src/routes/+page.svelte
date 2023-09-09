@@ -8,13 +8,13 @@
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
-	let allAds: (
+	let allProducts: (
 		| {
 				category: string;
 				colors: string[];
 				created_at: string;
 				id: number;
-				price: string;
+				price: number;
 				product_desc: string;
 				product_name: string;
 				seller_id: string;
@@ -25,12 +25,12 @@
 
 	// $: console.log(allAds[0]);
 
-	const getAllAds = async () => {
-		const ads = await supabase.from('ads').select();
-		allAds = [...[ads.data]];
+	const getAllProducts = async () => {
+		const products = await supabase.from('products').select();
+		allProducts = [...[products.data]];
 	};
 
-	getAllAds();
+	getAllProducts();
 
 	// onMount(async () => {
 	// 	const ozan = await supabase.from('ads').select();
@@ -39,7 +39,7 @@
 </script>
 
 <main class="grid md:grid-cols-3 grid-cols-1 gap-5">
-	{#each allAds[0] || [] as ad}
+	{#each allProducts[0] || [] as ad}
 		<a
 			class="card card-hover overflow-hidden"
 			href="/{slugify(ad.category.toLowerCase())}/{ad.slug}"

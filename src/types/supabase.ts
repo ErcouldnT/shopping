@@ -9,39 +9,6 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      ads: {
-        Row: {
-          category: string
-          colors: string[]
-          created_at: string
-          id: number
-          price: string
-          product_desc: string
-          product_name: string
-          seller_id: string | null
-        }
-        Insert: {
-          category: string
-          colors: string[]
-          created_at?: string
-          id?: number
-          price: string
-          product_desc: string
-          product_name: string
-          seller_id?: string | null
-        }
-        Update: {
-          category?: string
-          colors?: string[]
-          created_at?: string
-          id?: number
-          price?: string
-          product_desc?: string
-          product_name?: string
-          seller_id?: string | null
-        }
-        Relationships: []
-      }
       messages: {
         Row: {
           created_at: string
@@ -63,6 +30,63 @@ export interface Database {
           id?: number
           text?: string | null
           to?: string | null
+        }
+        Relationships: []
+      }
+      products: {
+        Row: {
+          category: string
+          colors: string[]
+          created_at: string
+          id: number
+          price: number
+          product_desc: string
+          product_name: string
+          seller_id: string
+          slug: string
+        }
+        Insert: {
+          category: string
+          colors: string[]
+          created_at?: string
+          id?: number
+          price: number
+          product_desc: string
+          product_name: string
+          seller_id?: string
+          slug: string
+        }
+        Update: {
+          category?: string
+          colors?: string[]
+          created_at?: string
+          id?: number
+          price?: number
+          product_desc?: string
+          product_name?: string
+          seller_id?: string
+          slug?: string
+        }
+        Relationships: []
+      }
+      sellers: {
+        Row: {
+          created_at: string
+          id: number
+          seller_id: string
+          shop_name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          seller_id?: string
+          shop_name: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          seller_id?: string
+          shop_name?: string
         }
         Relationships: []
       }

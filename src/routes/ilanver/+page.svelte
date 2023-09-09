@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { redirect } from '@sveltejs/kit';
-	import { enhance } from '$app/forms';
 	import { popup } from '@skeletonlabs/skeleton';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 	import { ListBox, ListBoxItem } from '@skeletonlabs/skeleton';
@@ -12,12 +10,18 @@
 
 	export let data;
 
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
 	let comboboxValue: string;
 	let colorValue: string;
 	let list: string[] = ['sarı', 'yeşil', 'mavi'];
 	let product_name: string;
 	let product_desc: string;
-	let price: string;
+	let price: number;
+
+	let seller: { created_at: string; id: number; seller_id: string; shop_name: string } | null;
+	let shop_name: string;
 
 	// $: console.log(colorValue);
 
@@ -29,7 +33,14 @@
 	};
 
 	async function publish() {
-		const { error } = await data.supabase.from('ads').insert({
+		if (!seller) {
+			const { data, error } = await supabase
+				.from('sellers')
+				.upsert({ seller_id: session?.user.id, shop_name })
+				.select();
+		}
+
+		const { error } = await data.supabase.from('products').insert({
 			product_name,
 			product_desc,
 			category: comboboxValue,
@@ -44,6 +55,17 @@
 		}
 		alert(error.message);
 	}
+
+	const getSellerInfo = async () => {
+		const { data, error } = await supabase
+			.from('sellers')
+			.select()
+			.eq('seller_id', session?.user.id || '');
+		seller = (data && data[0]) || null;
+		console.log(seller);
+	};
+
+	getSellerInfo();
 </script>
 
 <form on:submit|preventDefault class="container m-auto max-w-md p-5 space-y-5">
@@ -84,6 +106,21 @@
 	</div>
 
 	<InputChip bind:value={list} name="chips" placeholder="Renk yazınız..." />
+
+	{#if seller}
+		<p>Bol satışlar dileriz.</p>
+	{:else}
+		<label class="label">
+			<span>Mağaza adı</span>
+			<input
+				name="name"
+				bind:value={shop_name}
+				class="input"
+				type="text"
+				placeholder="Herkese açık mağaza adınız"
+			/>
+		</label>
+	{/if}
 
 	<button on:click={publish} class="btn variant-filled-primary">İlanı paylaş</button>
 </form>
