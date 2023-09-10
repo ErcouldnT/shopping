@@ -20,7 +20,13 @@
 	let product_desc: string;
 	let price: number;
 
-	let seller: { created_at: string; id: number; seller_id: string; shop_name: string } | null;
+	let seller: {
+		created_at: string;
+		id: number;
+		seller_id: string;
+		shop_name: string;
+		slug: string;
+	} | null;
 	let shop_name: string;
 
 	const popupCombobox: PopupSettings = {
@@ -34,8 +40,12 @@
 		if (!seller) {
 			const { data, error } = await supabase
 				.from('sellers')
-				.upsert({ seller_id: session?.user.id, shop_name })
+				.upsert({ seller_id: session?.user.id, shop_name, slug: slugify(shop_name) })
 				.select();
+
+			if (error) {
+				return alert('Bu mağaza sistemde zaten mevcut.');
+			}
 		}
 
 		const { error } = await data.supabase.from('products').insert({

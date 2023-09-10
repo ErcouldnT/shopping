@@ -16,7 +16,13 @@
 		slug: string;
 	};
 
-	let seller: { created_at: string; id: number; seller_id: string; shop_name: string } | null;
+	let seller: {
+		created_at: string;
+		id: number;
+		seller_id: string;
+		shop_name: string;
+		slug: string;
+	} | null;
 
 	const getSellerInfo = async () => {
 		const { data, error } = await supabase.from('sellers').select().eq('seller_id', ad.seller_id);
@@ -24,9 +30,11 @@
 	};
 
 	getSellerInfo();
+
+	// href="/{slugify(ad.category.toLowerCase())}/{ad.slug}"
 </script>
 
-<a class="card card-hover overflow-hidden" href="/{slugify(ad.category.toLowerCase())}/{ad.slug}">
+<a class="card card-hover overflow-hidden" href="/shop/{slugify(seller?.slug || '')}">
 	<header>
 		<img
 			src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fkingdoodle.com%2Fwp-content%2Fuploads%2F2019%2F11%2FBlack_Printo.jpg&f=1&nofb=1&ipt=c33f5b0b18fe26eaf32021117759fb08d901aba563b05e614dd18a34440c90e2&ipo=images"

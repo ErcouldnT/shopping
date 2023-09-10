@@ -12,24 +12,27 @@ export interface Database {
       messages: {
         Row: {
           created_at: string
-          from: string | null
+          from: string
           id: number
-          text: string | null
-          to: string | null
+          isSeen: boolean
+          text: string
+          to: string
         }
         Insert: {
           created_at?: string
-          from?: string | null
+          from?: string
           id?: number
-          text?: string | null
-          to?: string | null
+          isSeen?: boolean
+          text?: string
+          to?: string
         }
         Update: {
           created_at?: string
-          from?: string | null
+          from?: string
           id?: number
-          text?: string | null
-          to?: string | null
+          isSeen?: boolean
+          text?: string
+          to?: string
         }
         Relationships: []
       }
@@ -72,21 +75,21 @@ export interface Database {
       sellers: {
         Row: {
           created_at: string
-          id: number
           seller_id: string
           shop_name: string
+          slug: string
         }
         Insert: {
           created_at?: string
-          id?: number
           seller_id?: string
           shop_name: string
+          slug: string
         }
         Update: {
           created_at?: string
-          id?: number
           seller_id?: string
           shop_name?: string
+          slug?: string
         }
         Relationships: []
       }

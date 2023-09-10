@@ -3,8 +3,8 @@ import kategoriler from '../../settings/navigation';
 import slugify from '../../utils/slugify';
 
 export function load({ params }) {
-	const categorySlug = params.category.toLowerCase();
-	const category = kategoriler.find((el) => slugify(el) === categorySlug);
+	const slug = params.category;
+	const category = kategoriler.find((el) => slugify(el) === slug);
 
 	if (category) {
 		return {
